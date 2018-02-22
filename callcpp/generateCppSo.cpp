@@ -10,6 +10,14 @@ extern "C"
 #ifdef __cplusplus 
 }
 #endif
+
+class Add {
+    int m_a, m_b;
+public:
+    Add(int a, int b): m_a(a), m_b(b){}
+    int cal() {return m_a+m_b;}
+};
+
 // 发生错误时报告错误.  
 void reportError(lua_State* luaEnv, const char* msg)  
 {  
@@ -33,7 +41,9 @@ int cpp_mul(lua_State *l)
     checkArgsCount(l, 2);
     int a = lua_tointeger(l, 1);
     int b = lua_tointeger(l, 2);
-    lua_pushinteger(l, a * b);
+    Add obj = Add(a,b);
+    lua_pushinteger(l, obj.cal());
+    // lua_pushinteger(l, a * b);
     return 1;    // 返回值个数为1个
 } 
 #ifdef __cplusplus 
